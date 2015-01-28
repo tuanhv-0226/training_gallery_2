@@ -1,16 +1,31 @@
 package com.framgia.gallerytraining;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+
+import com.framgia.gallerytraining.adapters.AlbumAdapter;
+import com.framgia.gallerytraining.controllers.ControllerGallery;
+import com.framgia.gallerytraining.models.ListAlbums;
 
 public class GalleryMainActivity extends ActionBarActivity {
+
+	private ListView lvAlbums;
+	private ListAlbums listAlbums;
+	private ControllerGallery ctrGallery;
+	private AlbumAdapter albumAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_gallery_main);
+
+		lvAlbums = (ListView) findViewById(R.id.fragment_gallery_listAlbums);
+		ctrGallery = new ControllerGallery(this);
+		fetchListAlbum();
+
 	}
 
 	@Override
@@ -30,5 +45,26 @@ public class GalleryMainActivity extends ActionBarActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	public void fetchListAlbum() {
+		//Take list album in Device
+		listAlbums = ctrGallery.fetchListAlbums();
+		if (listAlbums != null) {
+			showListAlbum(listAlbums);
+		}
+	}
+
+	public void showListAlbum(ListAlbums lsAlbums) {
+		//Show list album by ListView
+		if (lsAlbums.getListAlbums().size() > 0) {
+			if (albumAdapter == null) {
+				albumAdapter = new AlbumAdapter(getBaseContext());
+			} else {
+				albumAdapter.notifyDataSetChanged();
+			}
+			albumAdapter.setData(lsAlbums.getListAlbums());
+			lvAlbums.setAdapter(albumAdapter);
+		}
 	}
 }
