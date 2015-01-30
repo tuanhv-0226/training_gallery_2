@@ -8,9 +8,16 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.framgia.gallerytraining.GalleryMainActivity" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+    <ListView
+		android:id="@+id/fragment_gallery_listAlbums"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:cacheColorHint="@android:color/transparent"
+		android:listSelector="@android:color/transparent"
+		android:overScrollFooter="@android:color/transparent"
+		android:drawSelectorOnTop="false"
+		android:longClickable="false"
+		android:smoothScrollbar="true"
+		android:dividerHeight="0.5dp"/>
 
 </RelativeLayout>
