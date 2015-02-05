@@ -1,16 +1,20 @@
 package com.framgia.gallerytraining;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.framgia.gallerytraining.adapters.AlbumAdapter;
 import com.framgia.gallerytraining.controllers.ControllerGallery;
 import com.framgia.gallerytraining.models.ListAlbums;
 
-public class GalleryMainActivity extends ActionBarActivity {
+public class GalleryMainActivity extends ActionBarActivity implements OnItemClickListener {
 
 	private ListView lvAlbums;
 	private ListAlbums listAlbums;
@@ -23,6 +27,7 @@ public class GalleryMainActivity extends ActionBarActivity {
 		setContentView(R.layout.activity_gallery_main);
 
 		lvAlbums = (ListView) findViewById(R.id.fragment_gallery_listAlbums);
+		lvAlbums.setOnItemClickListener(this);
 		ctrGallery = new ControllerGallery(this);
 		fetchListAlbum();
 
@@ -66,5 +71,14 @@ public class GalleryMainActivity extends ActionBarActivity {
 			albumAdapter.setData(lsAlbums.getListAlbums());
 			lvAlbums.setAdapter(albumAdapter);
 		}
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		Intent albumIntent = new Intent(this, AlbumActivity.class);
+		String bucketName = listAlbums.getListAlbums().get(position).getNameAlbum();
+		albumIntent.putExtra("AlbumName", bucketName);
+		startActivity(albumIntent);
 	}
 }

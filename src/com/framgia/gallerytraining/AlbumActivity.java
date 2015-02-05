@@ -1,16 +1,24 @@
 package com.framgia.gallerytraining;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class AlbumActivity extends ActionBarActivity {
+	private static final String TAG = "AlbumActivity";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_album);
+
+		if (getSupportFragmentManager().findFragmentByTag(TAG) == null) {
+            final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.add(android.R.id.content, new AlbumFragment(), TAG);
+            ft.commit();
+        }
 	}
 
 	@Override
