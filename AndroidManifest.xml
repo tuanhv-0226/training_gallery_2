@@ -34,6 +34,10 @@
             android:name=".AlbumActivity"
             android:label="@string/title_activity_album" >
         </activity>
+        <activity
+            android:name=".PictureActivity"
+            android:label="@string/title_activity_picture" >
+        </activity>
     </application>
 
 </manifest>
