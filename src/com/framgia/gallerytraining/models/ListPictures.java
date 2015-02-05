@@ -19,4 +19,12 @@ public class ListPictures {
 		this.listPictures = listPictures;
 	}
 
+	public void addPicture(Picture pic) {
+		this.listPictures.add(pic);
+	}
+
+	//#P8 - sorted list picture by orderBy
+	public void sortedListPictures(String orderBy) {
+	}
+
 }
