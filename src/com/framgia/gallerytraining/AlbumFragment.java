@@ -1,7 +1,9 @@
 package com.framgia.gallerytraining;
 
 import android.annotation.TargetApi;
+import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -160,19 +162,19 @@ public class AlbumFragment extends Fragment implements AdapterView.OnItemClickLi
     @TargetApi(VERSION_CODES.JELLY_BEAN)
     @Override
     public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-//        final Intent i = new Intent(getActivity(), PictureActivity.class);
-//        i.putExtra(PictureActivity.EXTRA_IMAGE, (int) id);
-//        i.putExtra(PictureActivity.ALBUM, albumName);
-//        if (Utils.hasJellyBean()) {
-//            // makeThumbnailScaleUpAnimation() looks kind of ugly here as the loading spinner may
-//            // show plus the thumbnail image in GridView is cropped. so using
-//            // makeScaleUpAnimation() instead.
-//            ActivityOptions options =
-//                    ActivityOptions.makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight());
-//            getActivity().startActivity(i, options.toBundle());
-//        } else {
-//            startActivity(i);
-//        }
+        final Intent i = new Intent(getActivity(), PictureActivity.class);
+        i.putExtra(PictureActivity.EXTRA_IMAGE, (int) id);
+        i.putExtra(PictureActivity.ALBUM, albumName);
+        if (Utils.hasJellyBean()) {
+            // makeThumbnailScaleUpAnimation() looks kind of ugly here as the loading spinner may
+            // show plus the thumbnail image in GridView is cropped. so using
+            // makeScaleUpAnimation() instead.
+            ActivityOptions options =
+                    ActivityOptions.makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight());
+            getActivity().startActivity(i, options.toBundle());
+        } else {
+            startActivity(i);
+        }
     }
 
     @Override
