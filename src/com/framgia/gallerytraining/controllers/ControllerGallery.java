@@ -19,6 +19,7 @@ public class ControllerGallery {
 		this.mContext = mContext;
 	}
 
+	//#A1 - fetch list album
 	public ListAlbums fetchListAlbums() {
 		//retrieve list albums from device, both internal and external
 		ListAlbums listAlbums = new ListAlbums();
@@ -39,7 +40,7 @@ public class ControllerGallery {
 		for (Uri uri : images) {
 			Cursor cur = mContext.getContentResolver().query(uri, PROJECTION_BUCKET,
 					BUCKET_GROUP_BY, null, BUCKET_ORDER_BY);
-			Log.v("ListingImages", " query count = " + cur.getCount());
+			Log.v("ListingAlbums", " query albums count = " + cur.getCount());
 
 			if (cur != null) {
 				int bucketIdColumn = cur.getColumnIndex(MediaStore.Images.Media.BUCKET_ID);
@@ -55,14 +56,14 @@ public class ControllerGallery {
 					album.setDateAlbum(cur.getString(dateColumn));
 					album.setDataAlbum(cur.getString(dataColumn));
 					album.setSizeAlbum(cur.getInt(sizeColumn));
-					album.setTotalPicture(countPicturesByAlbum(cur.getString(bucketColumn)));
+					album.setTotalPicture(countPicturesByAlbum(uri, cur.getInt(bucketIdColumn)));
 					listAlbums.addAlbum(album);
-					Log.v("ListingImages", " bucket=" + album.getNameAlbum()
-						+ " date_taken=" + album.getDateAlbum()
-						+ " bucket_id=" + album.getIdAlbum()
-						+ " size=" + album.getSizeAlbum()
-						+ " data=" + album.getDataAlbum()
-						+ " Pictures count = " + album.getTotalPicture());
+					Log.v("ListingAlbums", " bucket=" + album.getNameAlbum()
+							+ " bucket_id=" + album.getIdAlbum()
+							+ " date_taken=" + album.getDateAlbum()
+							+ " size=" + album.getSizeAlbum()
+							+ " data=" + album.getDataAlbum()
+							+ " Pictures count = " + album.getTotalPicture());
 				}
 				cur.close();
 			}
@@ -71,15 +72,14 @@ public class ControllerGallery {
 		return listAlbums;
 	}
 
-	private int countPicturesByAlbum(String bucketName) {
+	private int countPicturesByAlbum(Uri uri, int bucketIdColumn) {
 		int count = 0;
 		try {
 			final String orderBy = MediaStore.Images.Media.DATE_TAKEN;
 			String searchParams = null;
-			String bucket = bucketName;
-			searchParams = "bucket_display_name = \"" + bucket + "\"";
-			Cursor mPhotoCursor = mContext.getContentResolver().query(
-								MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null,
+			int bucketId = bucketIdColumn;
+			searchParams = MediaStore.Images.Media.BUCKET_ID + " = " + bucketId;
+			Cursor mPhotoCursor = mContext.getContentResolver().query(uri, null,
 								searchParams, null, orderBy + " DESC");
 			if (mPhotoCursor.getCount() > 0) {
 				count = mPhotoCursor.getCount();
@@ -90,6 +90,10 @@ public class ControllerGallery {
 		}
 
 		return count;
+	}
+
+	//#A2 - retrieve detail album
+	public void retrieveDetailAlbum(Album album) {
 	}
 
 	public void arriveAlbum(Album album) {

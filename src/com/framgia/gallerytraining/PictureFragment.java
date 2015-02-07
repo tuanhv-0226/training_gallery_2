@@ -1,5 +1,9 @@
 package com.framgia.gallerytraining;
 
+import uk.co.senab.photoview.PhotoViewAttacher;
+import uk.co.senab.photoview.PhotoViewAttacher.OnMatrixChangedListener;
+import uk.co.senab.photoview.PhotoViewAttacher.OnPhotoTapListener;
+import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,11 +17,13 @@ import com.framgia.gallerytraining.utils.ImageWorker;
 import com.framgia.gallerytraining.utils.Utils;
 
 public class PictureFragment extends Fragment {
-
 	private static final String IMAGE_DATA_EXTRA = "extra_image_data";
-    private String pathImage;
+
+	private String pathImage;
     private ImageView mImageView;
     private ImageFetcher mImageFetcher;
+
+    private PhotoViewAttacher mAttacher;
 
 	public static PictureFragment newInstance(String pathPic) {
 		PictureFragment frag = new PictureFragment();
@@ -42,6 +48,10 @@ public class PictureFragment extends Fragment {
 		final View rootView = inflater.inflate(R.layout.fragment_picture, container, false);
 		mImageView = (ImageView) rootView.findViewById(R.id.imageViewPic);
 		// Display image with full size
+
+		mAttacher = new PhotoViewAttacher(mImageView);
+		mAttacher.setOnMatrixChangeListener(new MatrixChangeListener());
+		mAttacher.setOnPhotoTapListener(new PhotoTapListener());
 
 		return rootView;
 	}
@@ -70,6 +80,24 @@ public class PictureFragment extends Fragment {
             // Cancel any pending image work
             ImageWorker.cancelWork(mImageView);
             mImageView.setImageDrawable(null);
+        }
+        // Need to call clean-up
+        mAttacher.cleanup();
+    }
+
+    private class PhotoTapListener implements OnPhotoTapListener {
+
+        @Override
+        public void onPhotoTap(View view, float x, float y) {
+            float xPercentage = x * 100f;
+            float yPercentage = y * 100f;
+        }
+    }
+
+    private class MatrixChangeListener implements OnMatrixChangedListener {
+
+        @Override
+        public void onMatrixChanged(RectF rect) {
         }
     }
 
