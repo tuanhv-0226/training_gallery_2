@@ -1,45 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/AlbumLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-    
-    <TextView
-		android:id="@+id/list_gallery_albumname"
-		style="@style/setting_item"
-		android:layout_width="match_parent"
-		android:layout_height="50dp"
-		android:layout_centerVertical="true"
-		android:layout_toLeftOf="@+id/list_gallery_album_ib_right_arrow"
-		android:background="@null"
-		android:drawableRight="@null"
-		android:ellipsize="end"
-		android:padding="10dp"
-		android:singleLine="true"
-		android:textColor="@color/black"
-		android:textSize="16sp" />
-	
-	<TextView
-		android:id="@+id/list_gallery_albumcount"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_centerVertical="true"
-		android:layout_gravity="right"
-		android:layout_marginRight="10dp"
-		android:layout_toLeftOf="@+id/list_gallery_album_ib_right_arrow"
-		android:singleLine="true"
-		android:textColor="@color/gray"
-		android:textSize="12sp" />
-	
-	<ImageView
-		android:id="@+id/list_gallery_album_ib_right_arrow"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_alignParentRight="true"
-		android:layout_centerVertical="true"
-		android:background="@android:color/transparent"
-		android:contentDescription="@null"
-		android:focusable="false"
-		android:padding="10dp"
-		android:src="@drawable/ic_forward" />
-	
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical" >
+
+    <ImageView
+        android:id="@+id/grid_thumb_album"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/empty_photo" >
+    </ImageView>
+
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gray"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/txt_album_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:gravity="center_horizontal"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/txt_album_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:gravity="bottom|center_horizontal"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+    </LinearLayout>
+
 </RelativeLayout>

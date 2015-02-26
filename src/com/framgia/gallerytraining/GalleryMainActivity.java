@@ -1,35 +1,28 @@
 package com.framgia.gallerytraining;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
 
-import com.framgia.gallerytraining.adapters.AlbumAdapter;
-import com.framgia.gallerytraining.controllers.ControllerGallery;
-import com.framgia.gallerytraining.models.ListAlbums;
-
-public class GalleryMainActivity extends ActionBarActivity implements OnItemClickListener {
-
-	private ListView lvAlbums;
-	private ListAlbums listAlbums;
-	private ControllerGallery ctrGallery;
-	private AlbumAdapter albumAdapter;
+public class GalleryMainActivity extends ActionBarActivity {
+	private static final String TAG = "GalleryActivity";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_gallery_main);
 
-		lvAlbums = (ListView) findViewById(R.id.fragment_gallery_listAlbums);
-		lvAlbums.setOnItemClickListener(this);
-		ctrGallery = new ControllerGallery(this);
-		fetchListAlbum();
+		ActionBar galleryBar = getSupportActionBar();
+		galleryBar.setDisplayShowHomeEnabled(true);
+
+		if (getSupportFragmentManager().findFragmentByTag(TAG) == null) {
+            final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.add(android.R.id.content, new GalleryFragment(), TAG);
+            ft.commit();
+        }
 
 	}
 
@@ -46,39 +39,16 @@ public class GalleryMainActivity extends ActionBarActivity implements OnItemClic
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
+		switch (id) {
+		case R.id.action_sortAlbumName:
+
+			break;
+
+		default:
+			break;
 		}
+
 		return super.onOptionsItemSelected(item);
 	}
 
-	public void fetchListAlbum() {
-		//Take list album in Device
-		listAlbums = ctrGallery.fetchListAlbums();
-		if (listAlbums != null) {
-			showListAlbum(listAlbums);
-		}
-	}
-
-	public void showListAlbum(ListAlbums lsAlbums) {
-		//Show list album by ListView
-		if (lsAlbums.getListAlbums().size() > 0) {
-			if (albumAdapter == null) {
-				albumAdapter = new AlbumAdapter(getBaseContext());
-			} else {
-				albumAdapter.notifyDataSetChanged();
-			}
-			albumAdapter.setData(lsAlbums.getListAlbums());
-			lvAlbums.setAdapter(albumAdapter);
-		}
-	}
-
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
-		Intent albumIntent = new Intent(this, AlbumActivity.class);
-		String bucketName = listAlbums.getListAlbums().get(position).getNameAlbum();
-		albumIntent.putExtra("AlbumName", bucketName);
-		startActivity(albumIntent);
-	}
 }

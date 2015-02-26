@@ -3,6 +3,8 @@ package com.framgia.gallerytraining;
 import uk.co.senab.photoview.PhotoViewAttacher;
 import uk.co.senab.photoview.PhotoViewAttacher.OnMatrixChangedListener;
 import uk.co.senab.photoview.PhotoViewAttacher.OnPhotoTapListener;
+import uk.co.senab.photoview.PhotoViewAttacher.OnViewTapListener;
+import android.app.Activity;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -52,6 +54,7 @@ public class PictureFragment extends Fragment {
 		mAttacher = new PhotoViewAttacher(mImageView);
 		mAttacher.setOnMatrixChangeListener(new MatrixChangeListener());
 		mAttacher.setOnPhotoTapListener(new PhotoTapListener());
+		mAttacher.setOnViewTapListener(new ViewTapListenter());
 
 		return rootView;
 	}
@@ -74,6 +77,18 @@ public class PictureFragment extends Fragment {
     }
 
     @Override
+	public void onAttach(Activity activity) {
+		// TODO Auto-generated method stub
+		super.onAttach(activity);
+	}
+
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+	}
+
+	@Override
     public void onDestroy() {
         super.onDestroy();
         if (mImageView != null) {
@@ -89,8 +104,6 @@ public class PictureFragment extends Fragment {
 
         @Override
         public void onPhotoTap(View view, float x, float y) {
-            float xPercentage = x * 100f;
-            float yPercentage = y * 100f;
         }
     }
 
@@ -99,6 +112,14 @@ public class PictureFragment extends Fragment {
         @Override
         public void onMatrixChanged(RectF rect) {
         }
+    }
+
+    private class ViewTapListenter implements OnViewTapListener {
+
+		@Override
+		public void onViewTap(View view, float x, float y) {
+		}
+
     }
 
 }

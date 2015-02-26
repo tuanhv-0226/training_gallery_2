@@ -16,6 +16,9 @@
 
 package com.framgia.gallerytraining.utils;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
@@ -29,6 +32,30 @@ import com.framgia.gallerytraining.AlbumActivity;
 public class Utils {
     private Utils() {};
 
+    /**
+     * Convert time from millisecond to date.
+     * @param timeStamp mililseconds since Jan 1, 1970 GMT
+     * @return time format HH:mm:ss\nyyyy dd MMM
+     */
+    public static String formatTimestamp(String timeStamp) {
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss - yyyy dd MMM");
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(Long.parseLong(timeStamp));
+        return formatter.format(calendar.getTime());
+    }
+
+    /**
+     * Convert file size from byte to human readable size.
+     * @param bytes
+     * @return
+     */
+    public static String convertByteToHumanReadable(long bytes) {
+        int unit = 1024;
+        if (bytes < unit) return bytes + " B";
+        int exp = (int) (Math.log(bytes) / Math.log(unit));
+        String pre = ("KMGTPE").charAt(exp-1) + ("i");
+        return String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
+    }
 
     @TargetApi(VERSION_CODES.HONEYCOMB)
     public static void enableStrictMode() {
